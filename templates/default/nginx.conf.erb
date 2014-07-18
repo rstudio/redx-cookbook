@@ -1,10 +1,10 @@
-lua_package_path "<%= node['redx']['lua_resty_redis']['dir'] %>/lib/?.lua;;";
+lua_package_path "<%= node['redx']['dir'] %>/lib/?.lua;<%= node['redx']['dir'] %>/conf/?.lua;<%= node['redx']['dir'] %>/bin/?.lua;;";
 
-upstream lucid-launcher {
-<% node['lucid']['server']['ports'].each do |port|%>
-  server lucid-server01:<%= port %>;
-  server lucid-server02:<%= port %>;
-  server lucid-server03:<%= port %>;
+init_by_lua_file '<%= node['redx']['dir'] %>/bin/init_redx.lua';
+
+upstream fallback {
+<% node['redx']['fallback_servers'].each do |server|%>
+  server <%= server %>;
 <% end %>
 }
 
@@ -12,8 +12,11 @@ server {
     # API
     listen 8081;
 
+    lua_code_cache <%= node['redx']['lua_code_cache'] %>;
+
     location / {
-        access_by_lua_file '<%= node['redx']['dir'] %>/api.lua';
+        default_type application/json;
+        access_by_lua_file '<%= node['redx']['dir'] %>/bin/api.lua';
     }
 }
 
@@ -21,6 +24,8 @@ server {
     # MAIN
     listen 80;
     listen 443;
+
+    lua_code_cache <%= node['redx']['lua_code_cache'] %>;
 
     proxy_set_header X-Forwarded-Port $server_port;
     proxy_set_header X-Forwarded-Proto $scheme;
@@ -32,10 +37,10 @@ server {
     proxy_buffering off;
 
     # set default upstream in case reference not found in redis
-    set $upstream 'lucid-launcher';
+    set $upstream 'fallback';
 
     location / {
-        access_by_lua_file '<%= node['redx']['dir'] %>/main.lua';
+        access_by_lua_file '<%= node['redx']['dir'] %>/bin/main.lua';
 
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
@@ -43,11 +48,11 @@ server {
         proxy_set_header Host $http_host;
         proxy_set_header X-Forwarded-For "$proxy_add_x_forwarded_for";
         proxy_intercept_errors on;
-        error_page 502 504 = @launcher;
+        error_page 502 504 = @fallback;
         proxy_pass http://$upstream;
     }
 
-    location @launcher {
-        proxy_pass http://lucid-launcher;
+    location @fallback {
+        proxy_pass http://fallback;
     }
 }

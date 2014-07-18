@@ -8,8 +8,7 @@
 #
 
 include_recipe 'redx::install'
-include_recipe 'redx::lua_resty_redis'
-include_recipe 'nginx::source'
+include_recipe 'openresty::luarocks'
 
 template "#{node['nginx']['dir']}/sites-available/redx.conf" do
   source 'nginx.conf.erb'
@@ -21,4 +20,13 @@ end
 
 link "#{node['nginx']['dir']}/sites-enabled/redx.conf" do
   to "#{node['nginx']['dir']}/sites-available/redx.conf"
+end
+
+node['redx']['luarocks']['modules'].each do |mod|
+  bash "luarocks install #{mod}" do
+    user 'root'
+    code <<-EOH
+      luarocks install #{mod}
+    EOH
+  end
 end

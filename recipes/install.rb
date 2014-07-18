@@ -14,3 +14,11 @@ git node['redx']['dir'] do
   revision node['redx']['revision']
   action :checkout
 end
+
+bash 'compile-lua-files-from-moonscript' do
+  user 'root'
+  cwd node['redx']['dir']
+  code <<-EOH
+    moonc .
+  EOH
+end

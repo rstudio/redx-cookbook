@@ -10,4 +10,4 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[redx]
+      - recipe[redx::install]

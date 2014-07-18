@@ -7,6 +7,7 @@
 # All rights reserved - Do Not Redistribute
 #
 
+include_recipe 'redx'
 include_recipe 'git'
 
 git node['redx']['dir'] do
@@ -21,16 +22,4 @@ bash 'compile-lua-files-from-moonscript' do
   code <<-EOH
     #{node['openresty']['source']['prefix']}/luajit/bin/moonc .
   EOH
-end
-
-template "#{node['nginx']['dir']}/sites-available/redx.conf" do
-  source 'nginx.conf.erb'
-  owner 'root'
-  group 'root'
-  mode 00644
-  notifies :reload, 'service[nginx]'
-end
-
-link "#{node['nginx']['dir']}/sites-enabled/redx.conf" do
-  to "#{node['nginx']['dir']}/sites-available/redx.conf"
 end

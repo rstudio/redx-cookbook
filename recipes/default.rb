@@ -13,9 +13,19 @@ node['redx']['luarocks']['modules'].each do |mod|
   bash "luarocks install #{mod}" do
     user 'root'
     code <<-EOH
-      #{node['openresty']['source']['prefix']}/luajit/bin/luarocks install #{mod}
+      #{node['openresty']['source']['prefix']}/luajit/bin/luarocks install #{mod['name']} #{mod['version']}
     EOH
   end
 end
 
-include_recipe 'redx::install'
+template "#{node['nginx']['dir']}/sites-available/redx.conf" do
+  source 'nginx.conf.erb'
+  owner 'root'
+  group 'root'
+  mode 00644
+  notifies :reload, 'service[nginx]'
+end
+
+link "#{node['nginx']['dir']}/sites-enabled/redx.conf" do
+  to "#{node['nginx']['dir']}/sites-available/redx.conf"
+end

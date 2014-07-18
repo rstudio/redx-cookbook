@@ -10,9 +10,11 @@ upstream fallback {
 
 server {
     # API
-    listen 8081;
+    <% node['redx']['nginx']['api_ports'].each do |port| %>
+    listen <%= port %>;
+    <% end %>
 
-    lua_code_cache <%= node['redx']['lua_code_cache'] %>;
+    lua_code_cache <%= node['redx']['nginx']['lua_code_cache'] %>;
 
     location / {
         default_type application/json;
@@ -22,19 +24,20 @@ server {
 
 server {
     # MAIN
-    listen 80;
-    listen 443;
+    <% node['redx']['nginx']['main_ports'].each do |port| %>
+    listen <%= port %>;
+    <% end %>
 
-    lua_code_cache <%= node['redx']['lua_code_cache'] %>;
+    lua_code_cache <%= node['redx']['nginx']['lua_code_cache'] %>;
 
     proxy_set_header X-Forwarded-Port $server_port;
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header X-Forwarded-Protocol $scheme;
     proxy_set_header X-Real-IP $remote_addr;
 
-    proxy_read_timeout 300;
-    proxy_connect_timeout 3;
-    proxy_buffering off;
+    proxy_read_timeout <%= node['redx']['nginx']['proxy_read_timeout'] %>;
+    proxy_connect_timeout <%= node['redx']['nginx']['proxy_connect_timeout'] %>;
+    proxy_buffering <%= node['redx']['nginx']['buffering'] %>;
 
     # set default upstream in case reference not found in redis
     set $upstream 'fallback';

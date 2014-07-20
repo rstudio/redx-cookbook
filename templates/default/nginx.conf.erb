@@ -1,6 +1,8 @@
-lua_package_path "<%= node['redx']['dir'] %>/lib/?.lua;<%= node['redx']['dir'] %>/conf/?.lua;<%= node['redx']['dir'] %>/bin/?.lua;;";
+lua_package_path "<%= node['redx']['dir'] %>/lua/src/lib/?.lua;<%= node['redx']['dir'] %>/lua/conf/?.lua;<%= node['redx']['dir'] %>/lua/src/bin/?.lua;;";
 
-init_by_lua_file '<%= node['redx']['dir'] %>/bin/init_redx.lua';
+init_by_lua_file "<%= node['redx']['dir'] %>/lua/src/bin/init_redx.lua";
+
+include mime.types;
 
 upstream fallback {
 <% node['redx']['fallback_servers'].each do |server|%>
@@ -18,7 +20,7 @@ server {
 
     location / {
         default_type application/json;
-        access_by_lua_file '<%= node['redx']['dir'] %>/bin/api.lua';
+        content_by_lua_file "<%= node['redx']['dir'] %>/lua/src/bin/api.lua";
     }
 }
 
@@ -43,7 +45,7 @@ server {
     set $upstream 'fallback';
 
     location / {
-        access_by_lua_file '<%= node['redx']['dir'] %>/bin/main.lua';
+        access_by_lua_file '<%= node['redx']['dir'] %>/lua/src/bin/main.lua';
 
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;

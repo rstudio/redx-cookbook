@@ -11,9 +11,9 @@ default['redx']['fallback_servers'] = %w(
 )
 
 default['redx']['luarocks']['modules'] = [
-  { name: 'lapis', version: ''},
+  { name: 'lapis', version: '' },
   { name: 'moonscript', version: '0.2.5' },
-  { name: 'inspect', version: ''},
+  { name: 'inspect', version: '' }
 ]
 
 # nginx configs (defaults are for development environments)

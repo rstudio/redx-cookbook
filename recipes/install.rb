@@ -22,4 +22,5 @@ bash 'compile-lua-files-from-moonscript' do
   code <<-EOH
     #{node['openresty']['source']['prefix']}/luajit/bin/moonc .
   EOH
+  not_if { Dir.exist?("#{node['redx']['dir']}/lua") }
 end

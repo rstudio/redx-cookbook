@@ -25,3 +25,12 @@ default['redx']['nginx']['lua_code_cache'] = 'off' # "on" or "off"
 default['redx']['nginx']['proxy_read_timeout'] = '300s'
 default['redx']['nginx']['proxy_connect_timeout'] = '3s'
 default['redx']['nginx']['buffering'] = 'off' # "on" or "off"
+
+# redx config file values
+default['redx']['redis']['host'] = '127.0.0.1'
+default['redx']['redis']['port'] = 6379
+default['redx']['max_path_length'] = 1
+
+# default redis config
+default['redis']['install_type'] = 'source'
+default['redis']['config']['save'] = []

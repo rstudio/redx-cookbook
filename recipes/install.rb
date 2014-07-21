@@ -24,3 +24,7 @@ bash 'compile-lua-files-from-moonscript' do
   EOH
   not_if { Dir.exist?("#{node['redx']['dir']}/lua") }
 end
+
+template "#{node['redx']['dir']}/lua/conf/config.lua" do
+  source 'config.lua.erb'
+end

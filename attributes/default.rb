@@ -14,7 +14,7 @@ default['redx']['luarocks']['modules'] = [
   { name: 'luasec', version: '' },
   { name: 'busted', version: '' },
   { name: 'lapis', version: '' },
-  { name: 'moonscript', version: '0.2.5' },
+  { name: 'moonscript', version: '' },
   { name: 'inspect', version: '' }
 ]
 

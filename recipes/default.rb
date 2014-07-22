@@ -31,4 +31,4 @@ link "#{node['nginx']['dir']}/sites-enabled/redx.conf" do
 end
 
 # install redis server if we're pointing redx to localhost
-include_recipe "redis::server" if %w( 127.0.0.1 localhost ).include? node['redx']['redis']['host'] 
+include_recipe 'redis::server' if %w( 127.0.0.1 localhost ).include? node['redx']['redis']['host']

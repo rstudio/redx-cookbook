@@ -29,6 +29,7 @@ default['redx']['nginx']['buffering'] = 'off' # "on" or "off"
 # redx config file values
 default['redx']['redis']['host'] = '127.0.0.1'
 default['redx']['redis']['port'] = 6379
+default['redx']['redis']['password'] = ''
 default['redx']['max_path_length'] = 1
 
 # default redis config

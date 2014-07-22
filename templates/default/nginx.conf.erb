@@ -2,7 +2,7 @@ lua_package_path "<%= node['redx']['dir'] %>/lua/src/lib/?.lua;<%= node['redx'][
 
 init_by_lua_file "<%= node['redx']['dir'] %>/lua/src/bin/init_redx.lua";
 
-include mime.types;
+resolver 8.8.8.8;
 
 upstream fallback {
 <% node['redx']['fallback_servers'].each do |server|%>

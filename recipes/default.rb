@@ -10,7 +10,7 @@
 include_recipe 'openresty::luarocks'
 
 node['redx']['luarocks']['modules'].each do |mod|
-  bash "luarocks install #{mod}" do
+  bash "luarocks install #{mod['name']}" do
     user 'root'
     code <<-EOH
       #{node['openresty']['source']['prefix']}/luajit/bin/luarocks install #{mod['name']} #{mod['version']}
@@ -32,3 +32,5 @@ end
 
 # install redis server if we're pointing redx to localhost
 include_recipe 'redis::server' if %w( 127.0.0.1 localhost ).include? node['redx']['redis']['host']
+
+package "liblua5.1-socket2"

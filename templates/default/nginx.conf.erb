@@ -1,4 +1,4 @@
-lua_package_path "<%= node['redx']['dir'] %>/lua/src/lib/?.lua;<%= node['redx']['dir'] %>/lua/conf/?.lua;<%= node['redx']['dir'] %>/lua/src/bin/?.lua;;";
+lua_package_path "<%= node['redx']['dir'] %>/lua/src/lib/?.lua;<%= node['redx']['dir'] %>/lua/conf/?.lua;<%= node['redx']['dir'] %>/lua/src/bin/?.lua;<%= node['redx']['nginx']['lua_package_path'] %>;;";
 
 init_by_lua_file "<%= node['redx']['dir'] %>/lua/src/bin/init_redx.lua";
 

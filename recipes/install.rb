@@ -27,4 +27,5 @@ end
 
 template "#{node['redx']['dir']}/lua/conf/config.lua" do
   source 'config.lua.erb'
+  notifies :reload, 'service[nginx]'
 end

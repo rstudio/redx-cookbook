@@ -21,6 +21,7 @@ default['redx']['luarocks']['modules'] = [
 
 # nginx configs (defaults are for development environments)
 default['redx']['nginx']['lua_package_path'] = ''
+default['redx']['nginx']['lua_package_cpath'] = ''
 default['redx']['nginx']['api_ports'] = %w( 8081 )
 default['redx']['nginx']['main_ports'] = %w( 8080 )
 default['redx']['nginx']['lua_code_cache'] = 'off' # "on" or "off"

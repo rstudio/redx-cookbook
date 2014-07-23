@@ -1,9 +1,12 @@
 lua_package_path "<%= node['redx']['dir'] %>/lua/src/lib/?.lua;<%= node['redx']['dir'] %>/lua/conf/?.lua;<%= node['redx']['dir'] %>/lua/src/bin/?.lua;<%= node['redx']['nginx']['lua_package_path'] %>;;";
+lua_package_cpath "<%= node['redx']['nginx']['lua_package_cpath'] %>;;";
 
 init_by_lua_file "<%= node['redx']['dir'] %>/lua/src/bin/init_redx.lua";
 
-resolver 8.8.8.8;
+<% unless node['redx']['nginx']['resolver'].nil? then %>
+resolver <%= node['redx']['nginx']['resolver'] %>;
 
+<% end %>
 upstream fallback {
 <% node['redx']['fallback_servers'].each do |server|%>
   server <%= server %>;

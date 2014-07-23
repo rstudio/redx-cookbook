@@ -31,6 +31,10 @@ default['redx']['redis']['host'] = '127.0.0.1'
 default['redx']['redis']['port'] = 6379
 default['redx']['redis']['password'] = ''
 default['redx']['max_path_length'] = 1
+default['redx']['redix']['timeout'] = 5000
+# keepalive pool size per nginx worker
+default['redx']['redis']['keepalive']['pool_size'] = 100
+default['redx']['redis']['keepalive']['timeout'] = 30000
 
 # default redis config
 default['redis']['install_type'] = 'source'

@@ -2,5 +2,8 @@ local M = { }
 M.redis_host = '<%= node['redx']['redis']['host'] %>'
 M.redis_port = '<%= node['redx']['redis']['port'] %>'
 M.redis_password = '<%= node['redx']['redis']['password'] %>'
+M.redis_timeout = <%= node['redx']['redix']['timeout'] %>
+M.redis_keepalive_pool_size = <%= node['redx']['redis']['keepalive']['pool_size'] %>
+M.redis_keepalive_max_idle_timeout = <%= node['redx']['redis']['keepalive']['timeout'] %>
 M.max_path_length = <%= node['redx']['max_path_length'] %>
 return M

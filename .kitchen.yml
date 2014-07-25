@@ -5,7 +5,8 @@ driver_config:
 platforms:
   - name: ubuntu-12.04
     run_list:
-      - recipe[apt::default]
+      - recipe[apt]
+      - recipe[curl]
 
 suites:
   - name: default

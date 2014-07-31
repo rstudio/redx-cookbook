@@ -15,6 +15,7 @@ node['redx']['luarocks']['modules'].each do |mod|
     code <<-EOH
       #{node['openresty']['source']['prefix']}/luajit/bin/luarocks install #{mod['name']} #{mod['version']}
     EOH
+    not_if "#{node['openresty']['source']['prefix']}/luajit/bin/luarocks show #{mod['name']}"
   end
 end
 

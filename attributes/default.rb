@@ -38,6 +38,7 @@ default['redx']['redis']['timeout'] = 5000
 default['redx']['redis']['keepalive']['pool_size'] = 100
 default['redx']['redis']['keepalive']['timeout'] = 30000
 default['redx']['max_path_length'] = 1
+default['redx']['stickiness'] = 0 # stickinesss disabled
 
 # default redis config
 default['redis']['install_type'] = 'source'

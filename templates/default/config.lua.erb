@@ -6,4 +6,5 @@ M.redis_timeout = <%= node['redx']['redis']['timeout'] %>
 M.redis_keepalive_pool_size = <%= node['redx']['redis']['keepalive']['pool_size'] %>
 M.redis_keepalive_max_idle_timeout = <%= node['redx']['redis']['keepalive']['timeout'] %>
 M.max_path_length = <%= node['redx']['max_path_length'] %>
+M.stickiness = <%= node['redx']['stickiness'] %>
 return M

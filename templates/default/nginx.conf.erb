@@ -1,4 +1,4 @@
-lua_package_path "<%= node['redx']['dir'] %>/lua/src/lib/?.lua;<%= node['redx']['dir'] %>/lua/conf/?.lua;<%= node['redx']['dir'] %>/lua/src/bin/?.lua;<%= node['redx']['nginx']['lua_package_path'] %>;;";
+lua_package_path "<%= node['redx']['dir'] %>/lua/src/lib/plugins/?.lua;<%= node['redx']['dir'] %>/lua/src/lib/?.lua;<%= node['redx']['dir'] %>/lua/conf/?.lua;<%= node['redx']['dir'] %>/lua/src/bin/?.lua;<%= node['redx']['nginx']['lua_package_path'] %>;;";
 lua_package_cpath "<%= node['redx']['nginx']['lua_package_cpath'] %>;;";
 
 init_by_lua_file "<%= node['redx']['dir'] %>/lua/src/bin/init_redx.lua";
@@ -23,7 +23,9 @@ server {
 
     location / {
         default_type application/json;
-        content_by_lua_file "<%= node['redx']['dir'] %>/lua/src/bin/api.lua";
+        content_by_lua '
+            require("lapis").serve("api")
+        ';
     }
 }
 
@@ -59,7 +61,9 @@ server {
     set $upstream 'fallback';
 
     location / {
-        access_by_lua_file '<%= node['redx']['dir'] %>/lua/src/bin/main.lua';
+        access_by_lua '
+            require("lapis").serve("main")
+        ';
 
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;

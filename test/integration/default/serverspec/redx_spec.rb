@@ -1,13 +1,6 @@
 require 'serverspec'
 
-include Serverspec::Helper::Exec
-include Serverspec::Helper::DetectOS
-
-RSpec.configure do |c|
-  c.before :all do
-    c.path = '/sbin:/usr/sbin'
-  end
-end
+set :backend, :exec
 
 describe "Redx Service" do
 
@@ -25,8 +18,14 @@ describe "Redx Service" do
     end
   end
 
-  it "healthcheck passes" do
-    expect(command("curl localhost:8082/health")).to return_exit_status 0
+  #it "healthcheck passes" do
+  #  expect(command("curl localhost:8082/health")).to exit_status 0
+  #end
+
+  describe command('curl localhost:8082/health') do
+    it "healthcheck passes" do
+      expect(subject.exit_status).to eq 0
+    end
   end
 
 end

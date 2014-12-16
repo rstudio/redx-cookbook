@@ -11,12 +11,12 @@ default['redx']['fallback_servers'] = %w(
 )
 
 default['redx']['luarocks']['modules'] = [
-  { name: 'luasec', version: '' },
-  { name: 'lua-cjson', version: '' },
-  { name: 'busted', version: '' },
-  { name: 'lapis', version: '' },
-  { name: 'moonscript', version: '' },
-  { name: 'inspect', version: '' }
+  { name: 'luasec', version: '0.4-4' },
+  { name: 'lua-cjson', version: '2.1.0-1' },
+  { name: 'busted', version: '1.9.0-1' },
+  { name: 'lapis', version: '1.0.4-1' },
+  { name: 'moonscript', version: '0.2.4-1' },
+  { name: 'inspect', version: '1.2-2' }
 ]
 
 # nginx configs (defaults are for development environments)
@@ -39,6 +39,8 @@ default['redx']['redis']['keepalive']['pool_size'] = 100
 default['redx']['redis']['keepalive']['timeout'] = 30000
 default['redx']['max_path_length'] = 1
 default['redx']['stickiness'] = 0 # stickinesss disabled
+default['redx']['default_score'] = 0
+default['redx']['plugins'] = "{'random'}"
 
 # default redis config
 default['redis']['install_type'] = 'source'

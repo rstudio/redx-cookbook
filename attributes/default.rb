@@ -1,5 +1,6 @@
 # basic attrs
 default['redx']['dir'] = '/opt/redx'
+default['redx']['plugins_dir'] = "#{node['redx']['dir']}/lua/src/lib/plugins"
 
 # git attrs
 default['redx']['repository'] = 'https://github.com/rstudio/redx.git'

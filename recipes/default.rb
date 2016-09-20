@@ -34,4 +34,9 @@ end
 # install redis server if we're pointing redx to localhost
 include_recipe 'redis::server' if %w( 127.0.0.1 localhost ).include? node['redx']['redis']['host']
 
-package "liblua5.1-socket2"
+case
+when node['lsb']['codename'] == 'precise'
+  package 'liblua5.1-socket2'
+else
+  package 'lua-socket'
+end
